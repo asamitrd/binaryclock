@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>binary</title>
+	<meta name="generator" content="BBEdit 14.0" />
+	<style>
+		body{
+			background-color: black;
+		}
+		#binaryclock {
+		    /*background-color:red;*/
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    transform: translate(-50%, -50%);
+			display: flex;
+		}
+		
+		.dot {
+			background-color: #aaffaa;
+			width: 5rem;
+			height: 5rem;
+			margin: 2rem;
+			transition: all 0.5s;
+			border-radius: 0.2rem;
+			color: black;
+			font-size: 0.5rem;
+			text-align: center;
+			padding: auto;
+			line-height: 1rem;
+		}
+		
+		.off {
+			background-color: #000000;
+		}
+		
+		.number {
+		    /*background-color: yellow;*/
+			margin: 2rem;
+		}
+	</style>
+</head>
+<body>
+	<div id="binaryclock">
+		<div id="binaryhour" class="number">
+			<div class="dot">32</div>
+			<div class="dot">16</div> 
+			<div class="dot">8</div> 
+			<div class="dot">4</div> 
+			<div class="dot">2</div> 
+			<div class="dot">1</div> 
+		</div>
+		<div id="binarymin" class="number">
+			<div class="dot">32</div> 
+			<div class="dot">16</div> 
+			<div class="dot">8</div> 
+			<div class="dot">4</div> 
+			<div class="dot">2</div> 
+			<div class="dot">1</div> 
+		</div>
+		<div id="binarysec" class="number">
+			<div class="dot">32</div> 
+			<div class="dot">16</div> 
+			<div class="dot">8</div> 
+			<div class="dot">4</div> 
+			<div class="dot">2</div> 
+			<div class="dot">1</div> 
+		</div>
+	</div>
+	
+	<script>
+		function to_binary(n)
+		{
+			let output = [];
+			let d = 32;
+			
+			while (d > 0){
+				if (n >= d) {
+					n = n - d
+					output.push(1)
+				
+				}else {output.push(0)}
+				d= d/2
+			}
+			
+			
+			return output;
+		}
+		function display_binary(elem,num)
+		{
+			const binary = to_binary(num);
+			const dots = elem.getElementsByClassName("dot");
+			//console.log(dots);
+			for (let i=0; i<6; ++i) {
+				if (binary[i] == 0) {
+					dots[i].classList.add("off");
+				} else{
+					dots[i].classList.remove("off");
+				}
+		
+			}
+		
+		}
+		//console.log(to_binary(59));
+		const hour_elem = document.getElementById("binaryhour");
+		const min_elem = document.getElementById("binarymin");
+		const sec_elem = document.getElementById("binarysec");
+		
+		function update_clock()
+		{
+			const time = new Date();
+			//console.log(time);
+			display_binary(hour_elem, time.getHours());
+			display_binary(min_elem, time.getMinutes());
+			display_binary(sec_elem, time.getSeconds());
+		}
+			
+		
+		setInterval(update_clock, 1000)
+		//display_binary (hour_elem, 59);
+	</script>
+</body>
+</html>
